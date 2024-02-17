@@ -5,22 +5,31 @@ import { Post } from '../../../models/post.model';
 
 describe('PostsComponent', () => {
   let POSTS: Post[];
+  let mockPostService: any;
+  let postComponent: PostsComponent;
 
   beforeEach(() => {
     POSTS = [
       { id: 1, title: 'ttt', body: 'bbbb' },
       { id: 2, title: 'ttt', body: 'bbbb' },
     ];
-  });
-
-  it('should create an instance', () => {
-    let mockPostService: any = jasmine.createSpyObj(PostService, [
+    mockPostService = jasmine.createSpyObj(PostService, [
       'getPost',
       'deletePost',
     ]);
     mockPostService.getPost.and.returnValue(of(true));
     mockPostService.deletePost.and.returnValue(of(true));
-    let postComponent = new PostsComponent(mockPostService);
+    postComponent = new PostsComponent(mockPostService);
+  });
+
+  it('should create an instance', () => {
+    // let mockPostService: any = jasmine.createSpyObj(PostService, [
+    //   'getPost',
+    //   'deletePost',
+    // ]);
+    // mockPostService.getPost.and.returnValue(of(true));
+    // mockPostService.deletePost.and.returnValue(of(true));
+    // let postComponent = new PostsComponent(mockPostService);
     postComponent.posts = POSTS;
     postComponent.delete(POSTS[0]);
     // expect(postComponent.posts.length).toBe(1);
@@ -28,40 +37,40 @@ describe('PostsComponent', () => {
   });
 
   it('should delte the post', () => {
-    let mockPostService: any = jasmine.createSpyObj(PostService, [
-      'getPost',
-      'deletePost',
-    ]);
-    mockPostService.getPost.and.returnValue(of(true));
-    mockPostService.deletePost.and.returnValue(of(true));
-    let postComponent = new PostsComponent(mockPostService);
+    // let mockPostService: any = jasmine.createSpyObj(PostService, [
+    //   'getPost',
+    //   'deletePost',
+    // ]);
+    // mockPostService.getPost.and.returnValue(of(true));
+    // mockPostService.deletePost.and.returnValue(of(true));
+    // let postComponent = new PostsComponent(mockPostService);
     postComponent.posts = POSTS;
     postComponent.delete(POSTS[0]);
     expect(postComponent.posts.length).toBe(1);
   });
 
   it('should call the deltePost in service only once', () => {
-    let mockPostService: any = jasmine.createSpyObj(PostService, [
-      'getPost',
-      'deletePost',
-    ]);
+    // let mockPostService: any = jasmine.createSpyObj(PostService, [
+    //   'getPost',
+    //   'deletePost',
+    // ]);
 
-    mockPostService.getPost.and.returnValue(of(true));
-    mockPostService.deletePost.and.returnValue(of(true));
-    let postComponent = new PostsComponent(mockPostService);
+    // mockPostService.getPost.and.returnValue(of(true));
+    // mockPostService.deletePost.and.returnValue(of(true));
+    // let postComponent = new PostsComponent(mockPostService);
     postComponent.posts = POSTS;
     postComponent.delete(POSTS[0]);
     expect(mockPostService.deletePost).toHaveBeenCalledTimes(1);
   });
 
   it('should delete the selected post only', () => {
-    let mockPostService: any = jasmine.createSpyObj(PostService, [
-      'getPost',
-      'deletePost',
-    ]);
-    mockPostService.getPost.and.returnValue(of(true));
-    mockPostService.deletePost.and.returnValue(of(true));
-    let postComponent = new PostsComponent(mockPostService);
+    // let mockPostService: any = jasmine.createSpyObj(PostService, [
+    //   'getPost',
+    //   'deletePost',
+    // ]);
+    // mockPostService.getPost.and.returnValue(of(true));
+    // mockPostService.deletePost.and.returnValue(of(true));
+    // let postComponent = new PostsComponent(mockPostService);
     postComponent.posts = POSTS;
     postComponent.delete(POSTS[0]);
 
