@@ -4,6 +4,16 @@ import { PostsComponent } from './posts.component';
 import { Post } from '../../../models/post.model';
 import { TestBed } from '@angular/core/testing';
 
+class MockPostService {
+  getPost() {
+    return of(true);
+  }
+
+  deletePost() {
+    return of(true);
+  }
+}
+
 describe('PostsComponent', () => {
   let POSTS: Post[];
   let mockPostService: any;
@@ -14,23 +24,26 @@ describe('PostsComponent', () => {
       { id: 1, title: 'ttt', body: 'bbbb' },
       { id: 2, title: 'ttt', body: 'bbbb' },
     ];
-    mockPostService = jasmine.createSpyObj(PostService, [
-      'getPost',
-      'deletePost',
-    ]);
-    mockPostService.getPost.and.returnValue(of(true));
-    mockPostService.deletePost.and.returnValue(of(true));
+    // mockPostService = jasmine.createSpyObj(PostService, [
+    //   'getPost',
+    //   'deletePost',
+    // ]);
+    // mockPostService.getPost.and.returnValue(of(true));
+    // mockPostService.deletePost.and.returnValue(of(true));
     // postComponent = new PostsComponent(mockPostService);
     TestBed.configureTestingModule({
       providers: [
         PostsComponent,
         {
           provide: PostService,
-          useValue: mockPostService,
+          // useValue: mockPostService,
+          useClass: MockPostService,
         },
       ],
     });
+
     postComponent = TestBed.inject(PostsComponent);
+    mockPostService = TestBed.inject(PostService);
   });
 
   it('should create an instance', () => {
@@ -70,6 +83,7 @@ describe('PostsComponent', () => {
     // mockPostService.deletePost.and.returnValue(of(true));
     // let postComponent = new PostsComponent(mockPostService);
     postComponent.posts = POSTS;
+    spyOn(mockPostService, 'deletePost').and.callThrough();
     postComponent.delete(POSTS[0]);
     expect(mockPostService.deletePost).toHaveBeenCalledTimes(1);
   });
