@@ -2,6 +2,7 @@ import { of } from 'rxjs';
 import { PostService } from '../../../services/post.service';
 import { PostsComponent } from './posts.component';
 import { Post } from '../../../models/post.model';
+import { TestBed } from '@angular/core/testing';
 
 describe('PostsComponent', () => {
   let POSTS: Post[];
@@ -19,7 +20,17 @@ describe('PostsComponent', () => {
     ]);
     mockPostService.getPost.and.returnValue(of(true));
     mockPostService.deletePost.and.returnValue(of(true));
-    postComponent = new PostsComponent(mockPostService);
+    // postComponent = new PostsComponent(mockPostService);
+    TestBed.configureTestingModule({
+      providers: [
+        PostsComponent,
+        {
+          provide: PostService,
+          useValue: mockPostService,
+        },
+      ],
+    });
+    postComponent = TestBed.inject(PostsComponent);
   });
 
   it('should create an instance', () => {
